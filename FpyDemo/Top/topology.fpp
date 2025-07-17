@@ -129,6 +129,7 @@ module FpyDemo {
       CdhCore.cmdDisp.seqCmdStatus     -> ComFpy.fprimeRouter.cmdResponseIn
       ComFpy.cmdSeq.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
       CdhCore.cmdDisp.seqCmdStatus -> ComFpy.cmdSeq.cmdResponseIn
+      ComFpy.cmdSeq.getTlmChan -> CdhCore.tlmSend.TlmGet
     }
 
     connections ComFpy_FileHandling {

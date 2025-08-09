@@ -10,8 +10,8 @@ The requirements for `FpyDemo::SignalGen` are as follows:
 
 Requirement | Description | Verification Method
 ----------- | ----------- | -------------------
-REF-SGN-001 | The `FpyDemo::SignalGen` component shall generate telemetry with tunable waveforms | System test
-REF-SGN-002 | The `FpyDemo::SignalGen` component shall store waveform data using data products | System test
+FpyDemo-SGN-001 | The `FpyDemo::SignalGen` component shall generate telemetry with tunable waveforms | System test
+FpyDemo-SGN-002 | The `FpyDemo::SignalGen` component shall store waveform data using data products | System test
 
 ## 3. Design
 

@@ -1,5 +1,5 @@
-#ifndef REF_BLOCK_DRIVER_IMPL_HPP
-#define REF_BLOCK_DRIVER_IMPL_HPP
+#ifndef FpyDemo_BLOCK_DRIVER_IMPL_HPP
+#define FpyDemo_BLOCK_DRIVER_IMPL_HPP
 
 #include <FpyDemo/BlockDriver/BlockDriverComponentAc.hpp>
 

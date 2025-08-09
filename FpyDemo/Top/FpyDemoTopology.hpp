@@ -8,8 +8,8 @@
 // ALL RIGHTS RESERVED.  United States Government Sponsorship
 // acknowledged.
 // ======================================================================
-#ifndef REF_REFTOPOLOGY_HPP
-#define REF_REFTOPOLOGY_HPP
+#ifndef FpyDemo_FpyDemoTOPOLOGY_HPP
+#define FpyDemo_FpyDemoTOPOLOGY_HPP
 // Included for access to FpyDemo::TopologyState and FpyDemo::ConfigObjects::pingEntries. These definitions are required by the
 // autocoder, but are also used in this hand-coded topology.
 #include <FpyDemo/Top/FpyDemoTopologyDefs.hpp>
@@ -67,7 +67,7 @@ void teardownTopology(const TopologyState& state);
 /**
  * \brief cycle the rate group driver based in a system timer
  *
- * In order to be a portable demonstration, the reference topology does not have a direct hardware timer that is typically used
+ * In order to be a portable demonstration, the FpyDemoerence topology does not have a direct hardware timer that is typically used
  * in embedded applications. Instead, a linux system timer is used to drive the rate groups at 1Hz. The slower rate groups are 
  * derived from this fundamental rate using the RateGroupDriver component to divide the rate down to slower rates.
  * 

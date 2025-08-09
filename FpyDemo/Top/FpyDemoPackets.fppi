@@ -9,25 +9,25 @@ telemetry packets FpyDemoPackets {
     FileHandling.fileDownlink.PacketsSent
     FileHandling.fileManager.CommandsExecuted
 
-  ComFpy.cmdSeq.State
-  ComFpy.cmdSeq.SequencesSucceeded
-  ComFpy.cmdSeq.SequencesFailed
-  ComFpy.cmdSeq.SequencesCancelled
-  ComFpy.cmdSeq.StatementsDispatched
-  ComFpy.cmdSeq.StatementsFailed
-  ComFpy.cmdSeq.LastDirectiveError
-  ComFpy.cmdSeq.SeqPath
-  ComFpy.cmdSeq.DebugBreakpointIdx
-  ComFpy.cmdSeq.Debug
-  ComFpy.cmdSeq.PRM_STATEMENT_TIMEOUT_SECS
+  FpyDemo.cmdSeq.State
+  FpyDemo.cmdSeq.SequencesSucceeded
+  FpyDemo.cmdSeq.SequencesFailed
+  FpyDemo.cmdSeq.SequencesCancelled
+  FpyDemo.cmdSeq.StatementsDispatched
+  FpyDemo.cmdSeq.StatementsFailed
+  FpyDemo.cmdSeq.LastDirectiveError
+  FpyDemo.cmdSeq.SeqPath
+  FpyDemo.cmdSeq.DebugBreakpointIdx
+  FpyDemo.cmdSeq.Debug
+  FpyDemo.cmdSeq.PRM_STATEMENT_TIMEOUT_SECS
 
 
-    ComFpy.comQueue.comQueueDepth
-    ComFpy.comQueue.buffQueueDepth
-    ComFpy.commsBufferManager.TotalBuffs
-    ComFpy.commsBufferManager.CurrBuffs
-    ComFpy.commsBufferManager.HiBuffs
-    #ComFpy.tlmSend.SendLevel
+    ComCcsds.comQueue.comQueueDepth
+    ComCcsds.comQueue.buffQueueDepth
+    ComCcsds.commsBufferManager.TotalBuffs
+    ComCcsds.commsBufferManager.CurrBuffs
+    ComCcsds.commsBufferManager.HiBuffs
+    #ComCcsds.tlmSend.SendLevel
 
     FpyDemo.rateGroup1Comp.RgMaxTime
     FpyDemo.rateGroup2Comp.RgMaxTime
@@ -41,8 +41,8 @@ telemetry packets FpyDemoPackets {
     FileHandling.fileDownlink.Warnings
     FileHandling.fileManager.Errors
 
-    ComFpy.commsBufferManager.NoBuffs
-    ComFpy.commsBufferManager.EmptyBuffs
+    ComCcsds.commsBufferManager.NoBuffs
+    ComCcsds.commsBufferManager.EmptyBuffs
 
     FpyDemo.rateGroup1Comp.RgCycleSlips
     FpyDemo.rateGroup2Comp.RgCycleSlips

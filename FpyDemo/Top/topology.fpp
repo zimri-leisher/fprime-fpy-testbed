@@ -17,7 +17,7 @@ module FpyDemo {
     # Subtopology imports
     # ----------------------------------------------------------------------
     import CdhCore.Subtopology
-    import ComFpy.Subtopology
+    import ComCcsds.Subtopology
     import FileHandling.Subtopology
     import DataProducts.Subtopology
     
@@ -42,6 +42,8 @@ module FpyDemo {
     instance typeDemo
     instance systemResources
     instance linuxTimer
+    instance comDriver
+    instance cmdSeq
 
     # ----------------------------------------------------------------------
     # Pattern graph specifiers
@@ -83,12 +85,12 @@ module FpyDemo {
       rateGroup1Comp.RateGroupMemberOut[2] -> CdhCore.tlmSend.Run
       rateGroup1Comp.RateGroupMemberOut[3] -> FileHandling.fileDownlink.Run
       rateGroup1Comp.RateGroupMemberOut[4] -> systemResources.run
-      rateGroup1Comp.RateGroupMemberOut[5] -> ComFpy.comQueue.run
+      rateGroup1Comp.RateGroupMemberOut[5] -> ComCcsds.comQueue.run
 
       # Rate group 2
       rateGroupDriverComp.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2Comp.CycleIn
-      rateGroup2Comp.RateGroupMemberOut[0] -> ComFpy.cmdSeq.checkTimers
-      rateGroup2Comp.RateGroupMemberOut[4] -> ComFpy.cmdSeq.tlmWrite
+      rateGroup2Comp.RateGroupMemberOut[0] -> FpyDemo.cmdSeq.checkTimers
+      rateGroup2Comp.RateGroupMemberOut[4] -> FpyDemo.cmdSeq.tlmWrite
       rateGroup2Comp.RateGroupMemberOut[1] -> sendBuffComp.SchedIn
       rateGroup2Comp.RateGroupMemberOut[2] -> SG3.schedIn
       rateGroup2Comp.RateGroupMemberOut[3] -> SG4.schedIn
@@ -98,10 +100,25 @@ module FpyDemo {
       rateGroup3Comp.RateGroupMemberOut[0] -> CdhCore.$health.Run
       rateGroup3Comp.RateGroupMemberOut[1] -> SG5.schedIn
       rateGroup3Comp.RateGroupMemberOut[2] -> blockDrv.Sched
-      rateGroup3Comp.RateGroupMemberOut[3] -> ComFpy.commsBufferManager.schedIn
+      rateGroup3Comp.RateGroupMemberOut[3] -> ComCcsds.commsBufferManager.schedIn
       rateGroup3Comp.RateGroupMemberOut[4] -> DataProducts.dpBufferManager.schedIn
       rateGroup3Comp.RateGroupMemberOut[5] -> DataProducts.dpWriter.schedIn
       rateGroup3Comp.RateGroupMemberOut[6] -> DataProducts.dpMgr.schedIn
+    }
+
+    connections Communications {
+      # ComDriver buffer allocations
+      comDriver.allocate      -> ComCcsds.commsBufferManager.bufferGetCallee
+      comDriver.deallocate    -> ComCcsds.commsBufferManager.bufferSendIn
+      
+      # ComDriver <-> ComStub (Uplink)
+      comDriver.$recv                     -> ComCcsds.comStub.drvReceiveIn
+      ComCcsds.comStub.drvReceiveReturnOut -> comDriver.recvReturnIn
+      
+      # ComStub <-> ComDriver (Downlink)
+      ComCcsds.comStub.drvSendOut      -> comDriver.$send
+      comDriver.sendReturnOut -> ComCcsds.comStub.drvSendReturnIn
+      comDriver.ready         -> ComCcsds.comStub.drvConnected
     }
 
     connections FpyDemo {
@@ -119,27 +136,27 @@ module FpyDemo {
 
     }
 
-    connections ComFpy_CdhCore{
+    connections ComCcsds_CdhCore{
       # events and telemetry to comQueue
-      CdhCore.events.PktSend        -> ComFpy.comQueue.comPacketQueueIn[ComFpy.Ports_ComPacketQueue.EVENTS]
-      CdhCore.tlmSend.PktSend            -> ComFpy.comQueue.comPacketQueueIn[ComFpy.Ports_ComPacketQueue.TELEMETRY]
+      CdhCore.events.PktSend        -> ComCcsds.comQueue.comPacketQueueIn[ComCcsds.Ports_ComPacketQueue.EVENTS]
+      CdhCore.tlmSend.PktSend            -> ComCcsds.comQueue.comPacketQueueIn[ComCcsds.Ports_ComPacketQueue.TELEMETRY]
 
       # Router <-> CmdDispatcher
-      ComFpy.fprimeRouter.commandOut  -> CdhCore.cmdDisp.seqCmdBuff
-      CdhCore.cmdDisp.seqCmdStatus     -> ComFpy.fprimeRouter.cmdResponseIn
-      ComFpy.cmdSeq.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
-      CdhCore.cmdDisp.seqCmdStatus -> ComFpy.cmdSeq.cmdResponseIn
-      ComFpy.cmdSeq.getTlmChan -> CdhCore.tlmSend.TlmGet
+      ComCcsds.fprimeRouter.commandOut  -> CdhCore.cmdDisp.seqCmdBuff
+      CdhCore.cmdDisp.seqCmdStatus     -> ComCcsds.fprimeRouter.cmdResponseIn
+      FpyDemo.cmdSeq.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
+      CdhCore.cmdDisp.seqCmdStatus -> FpyDemo.cmdSeq.cmdResponseIn
+      FpyDemo.cmdSeq.getTlmChan -> CdhCore.tlmSend.TlmGet
     }
 
-    connections ComFpy_FileHandling {
+    connections ComCcsds_FileHandling {
       # File Downlink <-> ComQueue
-      FileHandling.fileDownlink.bufferSendOut -> ComFpy.comQueue.bufferQueueIn[FileHandling.Ports_ComBufferQueue.FILE_DOWNLINK]
-      ComFpy.comQueue.bufferReturnOut[FileHandling.Ports_ComBufferQueue.FILE_DOWNLINK] -> FileHandling.fileDownlink.bufferReturn
+      FileHandling.fileDownlink.bufferSendOut -> ComCcsds.comQueue.bufferQueueIn[ComCcsds.Ports_ComBufferQueue.FILE]
+      ComCcsds.comQueue.bufferReturnOut[ComCcsds.Ports_ComBufferQueue.FILE] -> FileHandling.fileDownlink.bufferReturn
 
       # Router <-> FileUplink
-      ComFpy.fprimeRouter.fileOut     -> FileHandling.fileUplink.bufferSendIn
-      FileHandling.fileUplink.bufferSendOut -> ComFpy.fprimeRouter.fileBufferReturnIn
+      ComCcsds.fprimeRouter.fileOut     -> FileHandling.fileUplink.bufferSendIn
+      FileHandling.fileUplink.bufferSendOut -> ComCcsds.fprimeRouter.fileBufferReturnIn
     }
 
     connections FileHandling_DataProducts{

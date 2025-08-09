@@ -1,5 +1,5 @@
-#ifndef REF_LPR_ATM_IMPL_HPP
-#define REF_LPR_ATM_IMPL_HPP
+#ifndef FpyDemo_LPR_ATM_IMPL_HPP
+#define FpyDemo_LPR_ATM_IMPL_HPP
 
 #include <FpyDemo/RecvBuffApp/RecvBuffComponentAc.hpp>
 

@@ -1,5 +1,5 @@
-#ifndef REF_LPS_ATM_IMPL_HPP
-#define REF_LPS_ATM_IMPL_HPP
+#ifndef FpyDemo_LPS_ATM_IMPL_HPP
+#define FpyDemo_LPS_ATM_IMPL_HPP
 
 #include <FpyDemo/SendBuffApp/SendBuffComponentAc.hpp>
 

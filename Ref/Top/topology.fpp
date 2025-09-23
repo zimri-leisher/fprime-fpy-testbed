@@ -20,7 +20,7 @@ module Ref {
     import ComCcsds.Subtopology
     import FileHandling.Subtopology
     import DataProducts.Subtopology
-    
+
     # ----------------------------------------------------------------------
     # Instances used in the topology
     # ----------------------------------------------------------------------
@@ -68,7 +68,7 @@ module Ref {
     # Telemetry packets
     # ----------------------------------------------------------------------
 
-    include "RefPackets.fppi"
+    #include "RefPackets.fppi"
 
     # ----------------------------------------------------------------------
     # Direct graph specifiers
@@ -90,12 +90,14 @@ module Ref {
 
       # Rate group 2
       rateGroupDriverComp.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2Comp.CycleIn
-      rateGroup2Comp.RateGroupMemberOut[0] -> cmdSeq.checkTimers
+      rateGroup2Comp.RateGroupMemberOut[0] -> cmdSeq.tlmWrite
+      rateGroup2Comp.RateGroupMemberOut[6] -> cmdSeq.checkTimers
       rateGroup2Comp.RateGroupMemberOut[1] -> sendBuffComp.SchedIn
       rateGroup2Comp.RateGroupMemberOut[2] -> SG3.schedIn
       rateGroup2Comp.RateGroupMemberOut[3] -> SG4.schedIn
       rateGroup2Comp.RateGroupMemberOut[4] -> dpDemo.run
-      rateGroup2Comp.RateGroupMemberOut[5] -> cmdSeq.tlmWrite
+      #connection to FileManager listing feature command for sequencing
+      rateGroup2Comp.RateGroupMemberOut[5] -> FileHandling.fileManager.schedIn
 
       # Rate group 3
       rateGroupDriverComp.CycleOut[Ports_RateGroups.rateGroup3] -> rateGroup3Comp.CycleIn
@@ -141,8 +143,6 @@ module Ref {
       # Asynchronous request
       dpDemo.productRequestOut -> DataProducts.dpMgr.productRequestIn
       DataProducts.dpMgr.productResponseOut -> dpDemo.productRecvIn
-
-      cmdSeq.getTlmChan -> CdhCore.tlmSend.TlmGet
     }
 
     connections ComCcsds_CdhCore{
@@ -155,6 +155,7 @@ module Ref {
       CdhCore.cmdDisp.seqCmdStatus     -> ComCcsds.fprimeRouter.cmdResponseIn
       cmdSeq.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
       CdhCore.cmdDisp.seqCmdStatus -> cmdSeq.cmdResponseIn
+      cmdSeq.getTlmChan -> CdhCore.tlmSend.TlmGet
     }
 
     connections ComCcsds_FileHandling {

@@ -87,6 +87,8 @@ module Ref {
       rateGroup1Comp.RateGroupMemberOut[3] -> FileHandling.fileDownlink.Run
       rateGroup1Comp.RateGroupMemberOut[4] -> systemResources.run
       rateGroup1Comp.RateGroupMemberOut[5] -> ComCcsds.comQueue.run
+      rateGroup1Comp.RateGroupMemberOut[6] -> CdhCore.cmdDisp.run
+      rateGroup1Comp.RateGroupMemberOut[7] -> ComCcsds.aggregator.timeout
 
       # Rate group 2
       rateGroupDriverComp.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2Comp.CycleIn
@@ -156,6 +158,7 @@ module Ref {
       cmdSeq.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
       CdhCore.cmdDisp.seqCmdStatus -> cmdSeq.cmdResponseIn
       cmdSeq.getTlmChan -> CdhCore.tlmSend.TlmGet
+      cmdSeq.getParam -> FileHandling.prmDb.getPrm
     }
 
     connections ComCcsds_FileHandling {

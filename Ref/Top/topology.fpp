@@ -46,7 +46,7 @@ module Ref {
     instance comDriver
     instance cmdSeq0
     instance cmdSeq1
-    instance seqDispatcher
+    instance seqDisp
 
     # ----------------------------------------------------------------------
     # Pattern graph specifiers
@@ -171,13 +171,13 @@ module Ref {
 
     connections SeqDispatcher {
       # SeqDispatcher dispatches sequences to the pool of sequencers
-      seqDispatcher.seqRunOut[0] -> cmdSeq0.seqRunIn
-      seqDispatcher.seqRunOut[1] -> cmdSeq1.seqRunIn
+      seqDisp.seqRunOut[0] -> cmdSeq0.seqRunIn
+      seqDisp.seqRunOut[1] -> cmdSeq1.seqRunIn
       # Sequencers report start/done back to dispatcher
-      cmdSeq0.seqStartOut -> seqDispatcher.seqStartIn[0]
-      cmdSeq1.seqStartOut -> seqDispatcher.seqStartIn[1]
-      cmdSeq0.seqDoneOut -> seqDispatcher.seqDoneIn[0]
-      cmdSeq1.seqDoneOut -> seqDispatcher.seqDoneIn[1]
+      cmdSeq0.seqStartOut -> seqDisp.seqStartIn[0]
+      cmdSeq1.seqStartOut -> seqDisp.seqStartIn[1]
+      cmdSeq0.seqDoneOut -> seqDisp.seqDoneIn[0]
+      cmdSeq1.seqDoneOut -> seqDisp.seqDoneIn[1]
     }
 
     connections ComCcsds_FileHandling {

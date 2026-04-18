@@ -63,7 +63,7 @@ module Ref {
     stack size Default.STACK_SIZE \
     priority 20
 
-  instance seqDispatcher: Svc.SeqDispatcher base id 0x10008000 \
+  instance seqDisp: Svc.SeqDispatcher base id 0x10008000 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
     priority 21

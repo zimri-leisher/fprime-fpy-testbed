@@ -30,6 +30,8 @@ add_compile_options(
 )
 
 # Add subdirectories for the Ref project specific components
+# Ensure deployment headers take precedence over framework headers
+include_directories(BEFORE "${FPRIME_PROJECT_ROOT}")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/PingReceiver/")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/RecvBuffApp/")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/SendBuffApp/")

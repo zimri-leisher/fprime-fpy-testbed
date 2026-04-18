@@ -44,7 +44,8 @@ module Ref {
     instance dpDemo
     instance linuxTimer
     instance comDriver
-    instance cmdSeq
+    instance cmdSeq0
+    instance cmdSeq1
 
     # ----------------------------------------------------------------------
     # Pattern graph specifiers
@@ -92,14 +93,16 @@ module Ref {
 
       # Rate group 2
       rateGroupDriverComp.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2Comp.CycleIn
-      rateGroup2Comp.RateGroupMemberOut[0] -> cmdSeq.tlmWrite
-      rateGroup2Comp.RateGroupMemberOut[6] -> cmdSeq.checkTimers
+      rateGroup2Comp.RateGroupMemberOut[0] -> cmdSeq1.tlmWrite
+      rateGroup2Comp.RateGroupMemberOut[6] -> cmdSeq1.checkTimers
       rateGroup2Comp.RateGroupMemberOut[1] -> sendBuffComp.SchedIn
       rateGroup2Comp.RateGroupMemberOut[2] -> SG3.schedIn
       rateGroup2Comp.RateGroupMemberOut[3] -> SG4.schedIn
       rateGroup2Comp.RateGroupMemberOut[4] -> dpDemo.run
       #connection to FileManager listing feature command for sequencing
       rateGroup2Comp.RateGroupMemberOut[5] -> FileHandling.fileManager.schedIn
+      rateGroup2Comp.RateGroupMemberOut[7] -> cmdSeq0.tlmWrite
+      rateGroup2Comp.RateGroupMemberOut[8] -> cmdSeq0.checkTimers
 
       # Rate group 3
       rateGroupDriverComp.CycleOut[Ports_RateGroups.rateGroup3] -> rateGroup3Comp.CycleIn
@@ -155,10 +158,14 @@ module Ref {
       # Router <-> CmdDispatcher
       ComCcsds.fprimeRouter.commandOut  -> CdhCore.cmdDisp.seqCmdBuff
       CdhCore.cmdDisp.seqCmdStatus     -> ComCcsds.fprimeRouter.cmdResponseIn
-      cmdSeq.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
-      CdhCore.cmdDisp.seqCmdStatus -> cmdSeq.cmdResponseIn
-      cmdSeq.getTlmChan -> CdhCore.tlmSend.TlmGet
-      cmdSeq.getParam -> FileHandling.prmDb.getPrm
+      cmdSeq0.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
+      cmdSeq1.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
+      CdhCore.cmdDisp.seqCmdStatus -> cmdSeq0.cmdResponseIn
+      CdhCore.cmdDisp.seqCmdStatus -> cmdSeq1.cmdResponseIn
+      cmdSeq0.getTlmChan -> CdhCore.tlmSend.TlmGet
+      cmdSeq0.getParam -> FileHandling.prmDb.getPrm
+      cmdSeq1.getTlmChan -> CdhCore.tlmSend.TlmGet
+      cmdSeq1.getParam -> FileHandling.prmDb.getPrm
     }
 
     connections ComCcsds_FileHandling {

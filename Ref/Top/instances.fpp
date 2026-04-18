@@ -53,7 +53,12 @@ module Ref {
 
   instance typeDemo: Ref.TypeDemo base id 0x10005000
 
-  instance cmdSeq: Svc.FpySequencer base id 0x10006000 \
+  instance cmdSeq0: Svc.FpySequencer base id 0x10006000 \
+    queue size Default.QUEUE_SIZE \
+    stack size Default.STACK_SIZE \
+    priority 20
+
+  instance cmdSeq1: Svc.FpySequencer base id 0x10007000 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
     priority 20

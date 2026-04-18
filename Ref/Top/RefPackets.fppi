@@ -9,10 +9,14 @@ telemetry packets RefPackets {
     FileHandling.fileDownlink.PacketsSent
     FileHandling.fileManager.CommandsExecuted
 
-    Ref.cmdSeq.CS_LoadCommands
-    Ref.cmdSeq.CS_CancelCommands
-    Ref.cmdSeq.CS_CommandsExecuted
-    Ref.cmdSeq.CS_SequencesCompleted
+    Ref.cmdSeq0.CS_LoadCommands
+    Ref.cmdSeq0.CS_CancelCommands
+    Ref.cmdSeq0.CS_CommandsExecuted
+    Ref.cmdSeq0.CS_SequencesCompleted
+    Ref.cmdSeq1.CS_LoadCommands
+    Ref.cmdSeq1.CS_CancelCommands
+    Ref.cmdSeq1.CS_CommandsExecuted
+    Ref.cmdSeq1.CS_SequencesCompleted
     ComCcsds.comQueue.comQueueDepth
     ComCcsds.comQueue.buffQueueDepth
     ComCcsds.commsBufferManager.TotalBuffs
@@ -33,7 +37,8 @@ telemetry packets RefPackets {
     FileHandling.fileDownlink.Warnings
     FileHandling.fileManager.Errors
 
-    Ref.cmdSeq.CS_Errors
+    Ref.cmdSeq0.CS_Errors
+    Ref.cmdSeq1.CS_Errors
     ComCcsds.commsBufferManager.NoBuffs
     ComCcsds.commsBufferManager.EmptyBuffs
 

@@ -65,7 +65,10 @@ enum { WARN = 3, FATAL = 5 };
 namespace Ref_rateGroup3Comp {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace Ref_cmdSeq {
+namespace Ref_cmdSeq0 {
+enum { WARN = 3, FATAL = 5 };
+}
+namespace Ref_cmdSeq1 {
 enum { WARN = 3, FATAL = 5 };
 }
 }  // namespace PingEntries

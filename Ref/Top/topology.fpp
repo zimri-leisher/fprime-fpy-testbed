@@ -46,6 +46,7 @@ module Ref {
     instance comDriver
     instance cmdSeq0
     instance cmdSeq1
+    instance seqDispatcher
 
     # ----------------------------------------------------------------------
     # Pattern graph specifiers
@@ -166,6 +167,17 @@ module Ref {
       cmdSeq0.getParam -> FileHandling.prmDb.getPrm
       cmdSeq1.getTlmChan -> CdhCore.tlmSend.TlmGet
       cmdSeq1.getParam -> FileHandling.prmDb.getPrm
+    }
+
+    connections SeqDispatcher {
+      # SeqDispatcher dispatches sequences to the pool of sequencers
+      seqDispatcher.seqRunOut[0] -> cmdSeq0.seqRunIn
+      seqDispatcher.seqRunOut[1] -> cmdSeq1.seqRunIn
+      # Sequencers report start/done back to dispatcher
+      cmdSeq0.seqStartOut -> seqDispatcher.seqStartIn[0]
+      cmdSeq1.seqStartOut -> seqDispatcher.seqStartIn[1]
+      cmdSeq0.seqDoneOut -> seqDispatcher.seqDoneIn[0]
+      cmdSeq1.seqDoneOut -> seqDispatcher.seqDoneIn[1]
     }
 
     connections ComCcsds_FileHandling {

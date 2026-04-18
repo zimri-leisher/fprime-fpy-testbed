@@ -63,6 +63,11 @@ module Ref {
     stack size Default.STACK_SIZE \
     priority 20
 
+  instance cmdSeq2: Svc.FpySequencer base id 0x10009000 \
+    queue size Default.QUEUE_SIZE \
+    stack size Default.STACK_SIZE \
+    priority 20
+
   instance seqDisp: Svc.SeqDispatcher base id 0x10008000 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \

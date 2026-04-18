@@ -71,6 +71,9 @@ enum { WARN = 3, FATAL = 5 };
 namespace Ref_cmdSeq1 {
 enum { WARN = 3, FATAL = 5 };
 }
+namespace Ref_cmdSeq2 {
+enum { WARN = 3, FATAL = 5 };
+}
 }  // namespace PingEntries
 
 // Definitions are placed within a namespace named after the deployment

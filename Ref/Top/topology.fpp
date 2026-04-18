@@ -46,6 +46,7 @@ module Ref {
     instance comDriver
     instance cmdSeq0
     instance cmdSeq1
+    instance cmdSeq2
     instance seqDisp
 
     # ----------------------------------------------------------------------
@@ -104,6 +105,8 @@ module Ref {
       rateGroup2Comp.RateGroupMemberOut[5] -> FileHandling.fileManager.schedIn
       rateGroup2Comp.RateGroupMemberOut[7] -> cmdSeq0.tlmWrite
       rateGroup2Comp.RateGroupMemberOut[8] -> cmdSeq0.checkTimers
+      rateGroup2Comp.RateGroupMemberOut[9] -> cmdSeq2.tlmWrite
+      rateGroup2Comp.RateGroupMemberOut[10] -> cmdSeq2.checkTimers
 
       # Rate group 3
       rateGroupDriverComp.CycleOut[Ports_RateGroups.rateGroup3] -> rateGroup3Comp.CycleIn
@@ -161,23 +164,30 @@ module Ref {
       CdhCore.cmdDisp.seqCmdStatus     -> ComCcsds.fprimeRouter.cmdResponseIn
       cmdSeq0.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
       cmdSeq1.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
+      cmdSeq2.cmdOut -> CdhCore.cmdDisp.seqCmdBuff
       CdhCore.cmdDisp.seqCmdStatus -> cmdSeq0.cmdResponseIn
       CdhCore.cmdDisp.seqCmdStatus -> cmdSeq1.cmdResponseIn
+      CdhCore.cmdDisp.seqCmdStatus -> cmdSeq2.cmdResponseIn
       cmdSeq0.getTlmChan -> CdhCore.tlmSend.TlmGet
       cmdSeq0.getParam -> FileHandling.prmDb.getPrm
       cmdSeq1.getTlmChan -> CdhCore.tlmSend.TlmGet
       cmdSeq1.getParam -> FileHandling.prmDb.getPrm
+      cmdSeq2.getTlmChan -> CdhCore.tlmSend.TlmGet
+      cmdSeq2.getParam -> FileHandling.prmDb.getPrm
     }
 
     connections SeqDispatcher {
       # SeqDispatcher dispatches sequences to the pool of sequencers
       seqDisp.seqRunOut[0] -> cmdSeq0.seqRunIn
       seqDisp.seqRunOut[1] -> cmdSeq1.seqRunIn
+      seqDisp.seqRunOut[2] -> cmdSeq2.seqRunIn
       # Sequencers report start/done back to dispatcher
       cmdSeq0.seqStartOut -> seqDisp.seqStartIn[0]
       cmdSeq1.seqStartOut -> seqDisp.seqStartIn[1]
+      cmdSeq2.seqStartOut -> seqDisp.seqStartIn[2]
       cmdSeq0.seqDoneOut -> seqDisp.seqDoneIn[0]
       cmdSeq1.seqDoneOut -> seqDisp.seqDoneIn[1]
+      cmdSeq2.seqDoneOut -> seqDisp.seqDoneIn[2]
     }
 
     connections ComCcsds_FileHandling {

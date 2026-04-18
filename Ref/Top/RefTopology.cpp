@@ -54,6 +54,7 @@ void configureTopology() {
     // Command sequencer needs to allocate memory to hold contents of command sequences
     cmdSeq0.allocateBuffer(0, mallocator, 32 * 1024);
     cmdSeq1.allocateBuffer(0, mallocator, 32 * 1024);
+    cmdSeq2.allocateBuffer(0, mallocator, 32 * 1024);
 }
 
 // Public functions for use in main program are namespaced with deployment name Ref
@@ -109,6 +110,7 @@ void teardownTopology(const TopologyState& state) {
     // Resource deallocation
     cmdSeq0.deallocateBuffer(mallocator);
     cmdSeq1.deallocateBuffer(mallocator);
+    cmdSeq2.deallocateBuffer(mallocator);
     tearDownComponents(state);
 }
 }  // namespace Ref
